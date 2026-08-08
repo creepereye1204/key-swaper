@@ -1,0 +1,43 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate app icon
+        run: python generate_ico.py
+
+      - name: Build exe with PyInstaller
+        run: pyinstaller --onefile --noconsole --name key-swaper --icon=app_icon.ico hangul_toggle.py
+
+      - name: Rename artifact with version
+        shell: bash
+        run: |
+          mkdir -p out
+          cp dist/key-swaper.exe "out/key-swaper-windows-x64-${GITHUB_REF_NAME}.exe"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          files: out/*.exe
+          generate_release_notes: true
