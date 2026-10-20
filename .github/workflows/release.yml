@@ -27,13 +27,16 @@ jobs:
         run: python generate_ico.py
 
       - name: Build exe with PyInstaller
-        run: pyinstaller --onefile --noconsole --name key-swaper --icon=app_icon.ico hangul_toggle.py
+        run: |
+          pyinstaller --onefile --noconsole --name key-swaper --icon=app_icon.ico hangul_toggle.py
+          pyinstaller --onefile --noconsole --name esc-remap --icon=esc_icon.ico esc_remap.py
 
       - name: Rename artifact with version
         shell: bash
         run: |
           mkdir -p out
           cp dist/key-swaper.exe "out/key-swaper-windows-x64-${GITHUB_REF_NAME}.exe"
+          cp dist/esc-remap.exe "out/esc-remap-windows-x64-${GITHUB_REF_NAME}.exe"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2

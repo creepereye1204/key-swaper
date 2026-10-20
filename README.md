@@ -36,6 +36,16 @@
 
 설정(단축키, 자동 실행 여부)은 `%APPDATA%\HanYoungToggle\config.json`에 저장됩니다.
 
+## 🎮 ESC 대체키 (`esc-remap`)
+
+Moonlight 모바일 등으로 원격 접속하면 폰 키보드의 `ESC`가 안드로이드 **뒤로가기**로 처리돼 앱이 종료되는 문제가 있습니다.
+`esc-remap`은 지정한 다른 키 조합을 누르면 PC에 `ESC`를 대신 입력해주는 별도의 트레이 앱입니다.
+
+- 기본 대체키는 **`Ctrl+[`** (vim 등에서 쓰는 표준 ESC 대체 조합)입니다.
+- 트레이 메뉴 **대체키 변경**으로 원하는 키로 바꿀 수 있습니다.
+- PC(스트리밍 호스트) 쪽에서 실행하면 됩니다. 릴리즈에서 `esc-remap-windows-x64-*.exe` 를 받으세요.
+- 설정은 `%APPDATA%\EscRemap\config.json`에 저장됩니다.
+
 ## 🛠️ 소스에서 직접 빌드하기
 
 Windows + Python 3.11 환경에서:
@@ -44,9 +54,10 @@ Windows + Python 3.11 환경에서:
 pip install -r requirements.txt
 python generate_ico.py
 pyinstaller --onefile --noconsole --name key-swaper --icon=app_icon.ico hangul_toggle.py
+pyinstaller --onefile --noconsole --name esc-remap --icon=esc_icon.ico esc_remap.py
 ```
 
-빌드 결과물은 `dist/key-swaper.exe` 에 생성됩니다.
+빌드 결과물은 `dist/key-swaper.exe`, `dist/esc-remap.exe` 에 생성됩니다.
 
 ## 📦 릴리즈 배포
 

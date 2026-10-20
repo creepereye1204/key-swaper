@@ -1,7 +1,8 @@
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 BLUE = (45, 108, 223, 255)
 ORANGE = (232, 83, 30, 255)
+DARK = (40, 44, 52, 255)
 WHITE = (255, 255, 255, 255)
 
 
@@ -47,5 +48,25 @@ def _draw_swap_glyph(draw, cx, cy, r, lw):
     )
 
 
+def build_esc_icon(size=256):
+    img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(img)
+
+    border = max(2, size // 40)
+    radius = size // 5
+    draw.rounded_rectangle((0, 0, size - 1, size - 1), radius=radius, fill=DARK)
+    draw.rounded_rectangle(
+        (border, border, size - 1 - border, size - 1 - border),
+        radius=radius - border,
+        outline=ORANGE,
+        width=border,
+    )
+
+    font = ImageFont.load_default(size=int(size * 0.34))
+    draw.text((size / 2, size / 2), "ESC", font=font, fill=WHITE, anchor="mm")
+    return img
+
+
 if __name__ == "__main__":
     build_icon(256).save("icon_preview.png")
+    build_esc_icon(256).save("esc_icon_preview.png")

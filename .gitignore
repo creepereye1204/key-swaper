@@ -4,5 +4,7 @@ build/
 dist/
 *.spec
 app_icon.ico
+esc_icon.ico
 icon_preview.png
+esc_icon_preview.png
 .venv/
